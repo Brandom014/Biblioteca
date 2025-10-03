@@ -78,3 +78,20 @@ def atualizacao_disponibilidade():
         if conexao:
             conexao.close
 
+def remover_livro():
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        id_livro = int(input("Digite o ID do livro que deseja remover: "))
+        cursor.execute("DELETE FROM livros WHERE id = ?", (id_livro,))
+        conexao.commit()
+        if cursor.rowcount > 0:
+            print(f"Livro com ID {id_livro} removido com sucesso!")
+        else:
+            print("Nenhum livro foi encontrado com o ID fornecido.")
+    except Exception as erro:
+        print(f"Erro ao remover livro {erro}")
+    finally:
+        if conexao:
+            conexao.close
