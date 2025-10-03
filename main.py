@@ -39,3 +39,19 @@ def cadrastar_livros(titulo, autor, ano):
     finally:
         if conexao:
             conexao.close()
+
+def listar_livros():
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        cursor.execute("SELECT * FROM livros")
+        for livro in cursor.fetchall():
+            print(f"ID:{livro[0]} | Titulo:{livro[1]} | Autor:{livro[2]} | Ano:{livro[3]} | Disponibilidade:{livro[4]}")
+        conexao.commit()
+    except Exception as erro:
+        print(f"erro ao tentar listar livros {erro}")
+    finally:
+        if conexao:
+            conexao.close
+
