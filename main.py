@@ -7,7 +7,7 @@ def criar_tabela():
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS livros(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            título TEXT NOT NULL,
+            titulo TEXT NOT NULL,
             autor TEXT NOT NULL,
             ano INTEGER,
             disponivel TEXT
@@ -21,4 +21,21 @@ def criar_tabela():
         #sempre fechar a conexao
         if conexao:
             conexao.close()
-        
+
+
+def cadrastar_livros(titulo, autor, ano):
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+        INSERT INTO livros(titulo, autor, ano, disponivel)
+        VALUES (?, ?, ?, ?)
+        """, (titulo, autor, ano, "sim")
+        )
+        conexao.commit()
+    except Exception as erro:
+        print(f"erro ao tentar cadrastar livro {erro}")
+    finally:
+        if conexao:
+            conexao.close()
