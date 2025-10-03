@@ -23,7 +23,7 @@ def criar_tabela():
             conexao.close()
 
 
-def cadrastar_livros(titulo, autor, ano):
+def cadastrar_livros(titulo, autor, ano):
     try:
         conexao = sqlite3.connect("biblioteca.db")
         cursor = conexao.cursor()
@@ -35,7 +35,7 @@ def cadrastar_livros(titulo, autor, ano):
         )
         conexao.commit()
     except Exception as erro:
-        print(f"erro ao tentar cadrastar livro {erro}")
+        print(f"erro ao tentar cadastrar livro {erro}")
     finally:
         if conexao:
             conexao.close()
@@ -95,3 +95,33 @@ def remover_livro():
     finally:
         if conexao:
             conexao.close
+
+def menu():
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        while True:
+            print("\nMenu")
+            print("1. Cadastrar livro")
+            print("2. Listar livros")
+            print("3. Atualizar disponibilidade")
+            print("4. Remover livro")
+            print("5. Sair")
+
+            opcao = input("Escolha uma opção: ")
+            match opcao:
+                case "1": cadastrar_livros()
+                case "2": listar_livros()
+                case "3": atualizacao_disponibilidade()
+                case "4": remover_livro()
+                case "5": 
+                    print("Acesso encerrado")
+                    break
+    except Exception as erro:
+        print(f"Erro no Menu: {erro}")
+    finally:
+        if conexao:
+            conexao.close()
+
+
